@@ -5,8 +5,8 @@ const nextConfig = {
   images: {
     unoptimized: true
   },
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/VasavPatel.github.io' : '',
-  basePath: process.env.NODE_ENV === 'production' ? '/VasavPatel.github.io' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/Vasu2604.github.io' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/Vasu2604.github.io' : '',
 }
 
 module.exports = nextConfig
