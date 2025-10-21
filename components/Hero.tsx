@@ -296,8 +296,66 @@ export default function Hero() {
         cursorY.set(e.clientY)
       }}
     >
-      {/* Mobile Navigation */}
-      <div className="fixed top-0 left-0 right-0 z-50 md:hidden">
+      {/* Top Navigation Bar */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <div className="backdrop-blur-xl bg-white/80 dark:bg-black/30 border-b border-gray-200 dark:border-white/10">
+          <div className="max-w-screen-2xl mx-auto px-3 py-1.5 flex items-center justify-between">
+            {/* Left - Menu Button and Name */}
+            <div ref={menuRef} className="flex items-center gap-2">
+              <motion.button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative group"
+              >
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-blue-500 to-pink-500 rounded blur-sm opacity-0 group-hover:opacity-40 transition-opacity duration-300" />
+                
+                {/* Button Container */}
+                <div className="relative backdrop-blur-xl bg-gray-100 dark:bg-white/10 px-2 py-1 rounded border border-gray-300 dark:border-white/20 shadow-md flex items-center gap-1.5">
+                  <FaBars className="text-gray-700 dark:text-white text-[10px]" />
+                  <span className="text-gray-700 dark:text-white font-medium text-[10px]">Menu</span>
+                </div>
+              </motion.button>
+
+              {/* Name */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="relative"
+              >
+                <h1 className="text-sm font-semibold text-gray-800 dark:text-white/90 tracking-wide">
+                  Vasav Patel
+                </h1>
+              </motion.div>
+            </div>
+
+            {/* Right - Theme Toggle */}
+            <motion.button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="relative group"
+            >
+              {/* Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
+              
+              {/* Button Container */}
+              <div className="relative backdrop-blur-xl bg-gray-100 dark:bg-white/10 p-1.5 rounded-full border border-gray-300 dark:border-white/20 shadow-md">
+                {isDarkMode ? (
+                  <FaSun className="text-yellow-300 text-xs" />
+                ) : (
+                  <FaMoon className="text-indigo-600 text-xs" />
+                )}
+              </div>
+            </motion.button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation - Hidden on Desktop */}
+      <div className="fixed top-0 left-0 right-0 z-50 md:hidden hidden">
         <div className="backdrop-blur-xl bg-white/80 dark:bg-black/30 border-b border-gray-200 dark:border-white/10">
           <div className="px-4 py-3 flex items-center justify-between">
             <h1 className="text-lg font-semibold text-gray-800 dark:text-white">
@@ -643,7 +701,7 @@ export default function Hero() {
       </AnimatePresence>
 
              {/* Ultra Creative Dock */}
-             <div className="fixed bottom-4 left-4 right-4 md:bottom-6 md:left-1/2 md:right-auto md:transform md:-translate-x-1/2 z-40">
+             <div className="fixed bottom-6 z-40 left-1/2 transform -translate-x-1/2">
         {/* Dock Container with Amazing Effects */}
         <motion.div
           ref={dockRef}
@@ -673,13 +731,13 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-3xl" />
           
                  {/* Glass Container */}
-                 <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-2xl md:rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl">
+                 <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl">
                    {/* Top Border Shine */}
                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
                    {/* Removed moving rail/central label; each icon shows its own tooltip */}
                    
                    {/* Dock Items Container */}
-                   <div className="flex items-center justify-around md:items-end md:justify-start gap-1 md:gap-2 px-2 md:px-4 py-2 md:py-3">
+                   <div className="flex items-end gap-2 px-4 py-3">
               {dockItems.map((item, index) => (
                 <DockIcon
                   key={item.name}

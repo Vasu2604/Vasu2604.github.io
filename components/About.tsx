@@ -46,7 +46,7 @@ export default function About({ handleOpenExperience }: AboutProps) {
 
       {/* Profile Section */}
       <motion.div 
-        className="flex flex-col md:flex-row items-center mb-8 relative z-10"
+        className="flex flex-col items-center mb-8 relative z-10"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -73,7 +73,7 @@ export default function About({ handleOpenExperience }: AboutProps) {
           />
           
                  <div 
-                   className="relative w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-primary-500 shadow-[0_0_30px_rgba(59,130,246,0.35)]"
+                   className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary-500 shadow-[0_0_30px_rgba(59,130,246,0.35)]"
                  >
             <img
               src="/images/profile.jpg"
@@ -107,10 +107,10 @@ export default function About({ handleOpenExperience }: AboutProps) {
           </div>
         </motion.div>
         
-        <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 text-center md:text-left">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2 text-center">
           Hi, I&apos;m <span className="gradient-text">Vasu</span>
         </h1>
-        <div className="text-lg md:text-xl text-blue-700 dark:text-blue-300 mb-6 text-center md:text-left">
+        <div className="text-xl text-blue-700 dark:text-blue-300 mb-6 text-center">
           <TypeAnimation
             sequence={[
               'SOFTWARE ENGINEER', 1500,

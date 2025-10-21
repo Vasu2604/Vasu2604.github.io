@@ -24,10 +24,14 @@ export default function Window({ title, onClose, children, initialPosition = { x
       transition={{ duration: 0.2 }}
       drag={!isMaximized}
       dragMomentum={false}
-      className="fixed z-50 rounded-2xl overflow-hidden shadow-2xl top-[10%] left-[5%] right-[5%] w-auto max-w-[90vw] max-h-[calc(100vh-100px)] md:top-[5%] md:left-1/2 md:right-auto md:w-[850px] md:max-w-[90vw] md:max-h-[calc(100vh-200px)]"
+      className="fixed z-50 rounded-2xl overflow-hidden shadow-2xl"
       style={{ 
-        marginLeft: typeof window !== 'undefined' && window.innerWidth >= 768 ? (isMaximized ? '-45vw' : '-425px') : '0',
-        width: typeof window !== 'undefined' && window.innerWidth >= 768 ? (isMaximized ? '90vw' : '850px') : 'auto'
+        top: '5%',
+        left: '50%',
+        marginLeft: isMaximized ? '-45vw' : '-425px',
+        width: isMaximized ? '90vw' : '850px',
+        maxWidth: '90vw',
+        maxHeight: 'calc(100vh - 200px)'
       }}
     >
       {/* Window */}
