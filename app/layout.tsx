@@ -20,6 +20,15 @@ export const metadata: Metadata = {
   description: 'Portfolio of Vasav Patel - Master\'s student in AI at San Jose State University. Specializing in Machine Learning, Data Science, and Full Stack Development.',
   keywords: ['Vasav Patel', 'AI Engineer', 'ML Engineer', 'Data Scientist', 'Full Stack Developer', 'San Jose State University'],
   authors: [{ name: 'Vasav Patel' }],
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon.png', type: 'image/png' }
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/icon.png',
+  },
   openGraph: {
     title: 'Vasav Patel - AI/ML Engineer',
     description: 'Portfolio showcasing AI/ML projects, experience, and skills',
