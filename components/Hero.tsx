@@ -296,6 +296,38 @@ export default function Hero() {
         cursorY.set(e.clientY)
       }}
     >
+      {/* Mobile Navigation */}
+      <div className="fixed top-0 left-0 right-0 z-50 md:hidden">
+        <div className="backdrop-blur-xl bg-white/80 dark:bg-black/30 border-b border-gray-200 dark:border-white/10">
+          <div className="px-4 py-3 flex items-center justify-between">
+            <h1 className="text-lg font-semibold text-gray-800 dark:text-white">
+              Vasav Patel
+            </h1>
+            <div className="flex items-center gap-3">
+              <motion.button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-2 rounded-lg bg-gray-100 dark:bg-white/10"
+              >
+                <FaBars className="text-gray-700 dark:text-white text-sm" />
+              </motion.button>
+              <motion.button
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="p-2 rounded-lg bg-gray-100 dark:bg-white/10"
+              >
+                {isDarkMode ? (
+                  <FaSun className="text-yellow-300 text-sm" />
+                ) : (
+                  <FaMoon className="text-indigo-600 text-sm" />
+                )}
+              </motion.button>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Video Background */}
       <motion.div
         className="fixed inset-0 z-0"
@@ -610,8 +642,8 @@ export default function Hero() {
                )}
       </AnimatePresence>
 
-      {/* Ultra Creative Dock */}
-      <div className="fixed bottom-6 z-40 left-1/2 transform -translate-x-1/2">
+             {/* Ultra Creative Dock */}
+             <div className="fixed bottom-4 left-4 right-4 md:bottom-6 md:left-1/2 md:right-auto md:transform md:-translate-x-1/2 z-40">
         {/* Dock Container with Amazing Effects */}
         <motion.div
           ref={dockRef}
@@ -640,14 +672,14 @@ export default function Hero() {
           {/* Glow Background */}
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-3xl" />
           
-          {/* Glass Container */}
-          <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl">
-            {/* Top Border Shine */}
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
-            {/* Removed moving rail/central label; each icon shows its own tooltip */}
-            
-            {/* Dock Items Container */}
-            <div className="flex items-end gap-2 px-4 py-3">
+                 {/* Glass Container */}
+                 <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-2xl md:rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl">
+                   {/* Top Border Shine */}
+                   <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+                   {/* Removed moving rail/central label; each icon shows its own tooltip */}
+                   
+                   {/* Dock Items Container */}
+                   <div className="flex items-center justify-around md:items-end md:justify-start gap-1 md:gap-2 px-2 md:px-4 py-2 md:py-3">
               {dockItems.map((item, index) => (
                 <DockIcon
                   key={item.name}

@@ -144,7 +144,7 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
 
 export default function Projects() {
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto px-4 md:px-0">
       {/* Animated title with floating elements */}
       <motion.div 
         className="relative mb-12 text-center"
@@ -170,13 +170,13 @@ export default function Projects() {
         />
       </motion.div>
 
-      {/* Enhanced grid with stagger animation */}
-      <motion.div 
-        className="grid md:grid-cols-2 gap-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-      >
+             {/* Enhanced grid with stagger animation */}
+             <motion.div 
+               className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               transition={{ duration: 0.6, delay: 0.3 }}
+             >
         {projects.map((project, index) => (
           <ProjectCard key={project.title} project={project} index={index} />
         ))}
