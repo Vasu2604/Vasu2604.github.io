@@ -108,7 +108,7 @@ export default function About({ handleOpenExperience }: AboutProps) {
         </motion.div>
         
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-          Hi, I&apos;m <span className="gradient-text">Vasav Patel</span>
+          Hi, I&apos;m <span className="gradient-text">Vasu</span>
         </h1>
         <div className="text-xl text-blue-700 dark:text-blue-300 mb-6">
           <TypeAnimation
