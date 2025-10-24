@@ -4,7 +4,7 @@ const Hero = dynamic(() => import('@/components/Hero'), { ssr: false })
 
 export default function Home() {
   return (
-    <div className="min-h-screen w-full overflow-hidden">
+    <div className="min-h-screen overflow-hidden">
       <Hero />
     </div>
   )
