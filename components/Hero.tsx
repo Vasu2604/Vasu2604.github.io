@@ -9,6 +9,7 @@ import Projects from './Projects'
 import Skills from './Skills'
 import Contact from './Contact'
 import Experience from './Experience'
+import BackgroundVideo from './BackgroundVideo'
 
 type WindowType = 'profile' | 'projects' | 'skills' | 'contact' | 'experience' | null
 
@@ -104,7 +105,7 @@ function DockIcon({ item, index, mouseX, onClick, active, isMobile = false }: an
       whileTap={{ scale: 0.85 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="relative group aspect-square rounded-2xl bg-gradient-to-br flex items-center justify-center shadow-lg transition-all duration-300"
+      className="relative group aspect-square rounded-2xl bg-gradient-to-br flex items-center justify-center shadow-lg transition-all duration-300 flex-shrink-0"
     >
       {/* Gradient Background with Animation */}
       <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.color} opacity-90 group-hover:opacity-100 transition-opacity`} />
@@ -150,6 +151,8 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(false)
   const [isTablet, setIsTablet] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
+  const [showMobileDock, setShowMobileDock] = useState(false)
+  const [mobileDockTimeout, setMobileDockTimeout] = useState<NodeJS.Timeout | null>(null)
   
   const mouseX = useMotionValue(Infinity)
   const dockLocalX = useMotionValue(0)
@@ -176,6 +179,81 @@ export default function Hero() {
     window.addEventListener('resize', checkDevice)
     return () => window.removeEventListener('resize', checkDevice)
   }, [])
+
+  // Mobile dock touch detection
+  useEffect(() => {
+    if (!isMobile) return
+
+    const handleTouchStart = (e: TouchEvent) => {
+      const touchY = e.touches[0].clientY
+      const screenHeight = window.innerHeight
+      
+      // Show dock when touching bottom 20% of screen
+      if (touchY > screenHeight * 0.8) {
+        setShowMobileDock(true)
+        
+        // Clear existing timeout
+        if (mobileDockTimeout) {
+          clearTimeout(mobileDockTimeout)
+        }
+        
+        // Hide dock after 3 seconds of no interaction
+        const timeout = setTimeout(() => {
+          setShowMobileDock(false)
+        }, 3000)
+        
+        setMobileDockTimeout(timeout)
+      }
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const touchY = e.touches[0].clientY
+      const screenHeight = window.innerHeight
+      
+      // Keep dock visible while touching bottom area
+      if (touchY > screenHeight * 0.7) {
+        setShowMobileDock(true)
+        
+        // Clear existing timeout
+        if (mobileDockTimeout) {
+          clearTimeout(mobileDockTimeout)
+        }
+        
+        // Hide dock after 3 seconds of no interaction
+        const timeout = setTimeout(() => {
+          setShowMobileDock(false)
+        }, 3000)
+        
+        setMobileDockTimeout(timeout)
+      }
+    }
+
+    const handleTouchEnd = () => {
+      // Hide dock after 3 seconds of no interaction
+      if (mobileDockTimeout) {
+        clearTimeout(mobileDockTimeout)
+      }
+      
+      const timeout = setTimeout(() => {
+        setShowMobileDock(false)
+      }, 3000)
+      
+      setMobileDockTimeout(timeout)
+    }
+
+    document.addEventListener('touchstart', handleTouchStart, { passive: true })
+    document.addEventListener('touchmove', handleTouchMove, { passive: true })
+    document.addEventListener('touchend', handleTouchEnd, { passive: true })
+
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart)
+      document.removeEventListener('touchmove', handleTouchMove)
+      document.removeEventListener('touchend', handleTouchEnd)
+      if (mobileDockTimeout) {
+        clearTimeout(mobileDockTimeout)
+      }
+    }
+  }, [isMobile, mobileDockTimeout])
 
   // Load theme from localStorage
   useEffect(() => {
@@ -377,24 +455,11 @@ export default function Hero() {
       </div>
 
       {/* Dynamic Video Background */}
-      <motion.div
-        className="fixed inset-0 z-0"
-        style={{
-          x: useSpring(useTransform(cursorX, [0, typeof window !== 'undefined' ? window.innerWidth : 1], [-8, 8]), { stiffness: 80, damping: 20 }),
-          y: useSpring(useTransform(cursorY, [0, typeof window !== 'undefined' ? window.innerHeight : 1], [-6, 6]), { stiffness: 80, damping: 20 }),
-        }}
-      >
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute w-full h-full object-cover"
-        >
-          <source src="/background-video.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-transparent dark:bg-black/40"></div>
-      </motion.div>
+      <BackgroundVideo 
+        cursorX={useSpring(useTransform(cursorX, [0, typeof window !== 'undefined' ? window.innerWidth : 1], [-8, 8]), { stiffness: 80, damping: 20 })}
+        cursorY={useSpring(useTransform(cursorY, [0, typeof window !== 'undefined' ? window.innerHeight : 1], [-6, 6]), { stiffness: 80, damping: 20 })}
+        isMobile={isMobile}
+      />
 
       {/* Dynamic Cursor Effects (Desktop Only) */}
       {!isMobile && (
@@ -586,8 +651,8 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* Dynamic Dock System */}
-      <div className={`fixed bottom-4 sm:bottom-6 z-40 left-1/2 transform -translate-x-1/2 ${isMobile ? 'w-full max-w-xs px-4' : 'w-auto'}`}>
-        {/* Desktop Dock Container */}
+      <div className={`fixed bottom-4 sm:bottom-6 z-40 left-1/2 transform -translate-x-1/2 ${isMobile ? 'w-full max-w-xs px-4' : 'w-auto flex justify-center'}`}>
+        {/* Desktop Dock Container - macOS Style */}
         {!isMobile && (
           <motion.div
             ref={dockRef}
@@ -610,19 +675,19 @@ export default function Hero() {
               rotateY: isDockHover ? 2 : 0
             }}
             transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-            className="relative"
+            className="relative flex justify-center"
             style={{ transformStyle: 'preserve-3d' }}
           >
             {/* Glow Background */}
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-3xl" />
             
-            {/* Glass Container */}
+            {/* Glass Container - macOS Style */}
             <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl">
               {/* Top Border Shine */}
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
               
-              {/* Dock Items Container */}
-              <div className="flex items-end gap-2 px-4 py-3">
+              {/* Dock Items Container - Perfectly Centered */}
+              <div className="flex items-end gap-2 px-4 py-3 justify-center">
                 {dockItems.map((item, index) => (
                   <DockIcon
                     key={item.name}
@@ -636,8 +701,8 @@ export default function Hero() {
                 ))}
               </div>
 
-              {/* Active Indicator */}
-              <div className="absolute -bottom-1 left-0 right-0 flex justify-center gap-2 px-4">
+              {/* Active Indicator - Centered */}
+              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 flex justify-center gap-2">
                 {dockItems.map((item) => (
                   item.window === openWindow && (
                     <motion.div
@@ -655,25 +720,68 @@ export default function Hero() {
           </motion.div>
         )}
 
-        {/* Mobile Dock - Grid Layout */}
+        {/* Mobile Dock - Dynamic macOS Style */}
         {isMobile && (
-          <div className="block">
-            <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-2xl border border-gray-300 dark:border-white/20 shadow-2xl p-3">
-              <div className="grid grid-cols-4 gap-2">
-                {dockItems.slice(0, 8).map((item, index) => (
+          <>
+            {/* Touch indicator when dock is hidden */}
+            {!showMobileDock && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.6 }}
+                transition={{ delay: 2, duration: 1 }}
+                className="absolute bottom-2 left-1/2 transform -translate-x-1/2 pointer-events-none"
+              >
+                <div className="flex items-center gap-2 px-4 py-2 bg-black/20 backdrop-blur-sm rounded-full">
+                  <div className="w-1 h-1 bg-white/60 rounded-full animate-pulse"></div>
+                  <div className="w-1 h-1 bg-white/60 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-1 h-1 bg-white/60 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                </div>
+              </motion.div>
+            )}
+            
+            <motion.div
+              initial={{ opacity: 0, y: 100, scale: 0.8 }}
+              animate={{ 
+                opacity: showMobileDock ? 1 : 0, 
+                y: showMobileDock ? 0 : 100,
+                scale: showMobileDock ? 1 : 0.8
+              }}
+              transition={{ 
+                duration: 0.3, 
+                ease: "easeOut",
+                type: "spring",
+                stiffness: 300,
+                damping: 30
+              }}
+              className="block"
+            >
+            <div className="relative backdrop-blur-2xl bg-white/90 dark:bg-white/20 rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl p-4">
+              {/* Top Border Shine */}
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+              
+              {/* Dock Items Container */}
+              <div className="flex items-center justify-center gap-3">
+                {dockItems.slice(0, 7).map((item, index) => (
                   <DockIcon
                     key={item.name}
                     item={item}
                     index={index}
                     mouseX={mouseX}
-                    onClick={() => handleDockItemClick(item)}
+                    onClick={() => {
+                      handleDockItemClick(item)
+                      setShowMobileDock(false) // Hide dock after selection
+                    }}
                     active={false}
                     isMobile={true}
                   />
                 ))}
               </div>
+              
+              {/* Bottom Border Shine */}
+              <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
             </div>
-          </div>
+          </motion.div>
+          </>
         )}
       </div>
     </section>
