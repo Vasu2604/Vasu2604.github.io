@@ -87,7 +87,7 @@ function DockIcon({ item, index, mouseX, onClick, active }: any) {
       whileTap={{ scale: 0.85 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="relative group aspect-square rounded-2xl bg-gradient-to-br flex items-center justify-center shadow-lg transition-all duration-300"
+      className="dock-item relative group aspect-square rounded-2xl bg-gradient-to-br flex items-center justify-center shadow-lg transition-all duration-300 flex-shrink-0"
     >
       {/* Gradient Background with Animation */}
       <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.color} opacity-90 group-hover:opacity-100 transition-opacity`} />
@@ -671,13 +671,9 @@ export default function Hero() {
                )}
       </AnimatePresence>
 
-             {/* Universal Adaptive Dock */}
-             <div className={`fixed bottom-4 z-40 left-1/2 transform -translate-x-1/2 w-full px-4 ${
-               device.isMobile ? 'max-w-sm' : 
-               device.isTablet ? 'max-w-2xl' : 
-               'max-w-4xl'
-             }`}>
-        {/* Desktop/Tablet Dock - Enhanced for all screen sizes */}
+             {/* macOS-Style Dock - No Scrolling, Perfect Centering */}
+             <div className="fixed bottom-4 z-40 left-1/2 transform -translate-x-1/2">
+        {/* Desktop/Tablet Dock - True macOS Behavior */}
         {!device.isMobile && (
           <motion.div
             ref={dockRef}
@@ -706,15 +702,13 @@ export default function Hero() {
             {/* Glow Background */}
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-3xl" />
             
-            {/* Glass Container */}
+            {/* Glass Container - Fixed width, no overflow */}
             <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl">
               {/* Top Border Shine */}
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
               
-              {/* Dock Items Container - Responsive */}
-              <div className={`flex items-end gap-1 px-2 py-2 overflow-x-auto ${
-                device.isTablet ? 'gap-1.5 px-3 py-2.5' : 'gap-2 px-4 py-3'
-              }`}>
+              {/* Dock Items Container - NO SCROLLING, FIXED WIDTH */}
+              <div className="dock-container flex items-end justify-center gap-1.5 px-4 py-3 w-fit mx-auto">
                 {dockItems.map((item, index) => (
                   <DockIcon
                     key={item.name}
@@ -728,9 +722,7 @@ export default function Hero() {
               </div>
 
               {/* Active Indicator */}
-              <div className={`absolute -bottom-1 left-0 right-0 flex justify-center gap-1 px-2 ${
-                device.isTablet ? 'gap-1.5 px-3' : 'gap-2 px-4'
-              }`}>
+              <div className="absolute -bottom-1 left-0 right-0 flex justify-center gap-1.5 px-4">
                 {dockItems.map((item) => (
                   item.window === openWindow && (
                     <motion.div
@@ -748,10 +740,10 @@ export default function Hero() {
           </motion.div>
         )}
 
-        {/* Mobile Dock - Enhanced Grid Layout */}
+        {/* Mobile Dock - Clean Grid Layout */}
         {device.isMobile && (
-          <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-2xl border border-gray-300 dark:border-white/20 shadow-2xl p-2">
-            <div className="grid grid-cols-4 gap-1">
+          <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-2xl border border-gray-300 dark:border-white/20 shadow-2xl p-3 w-fit mx-auto">
+            <div className="grid grid-cols-4 gap-3">
               {dockItems.slice(0, 8).map((item, index) => {
                 const Icon = item.icon
                 return (
@@ -759,12 +751,12 @@ export default function Hero() {
                     key={item.name}
                     onClick={() => handleDockItemClick(item)}
                     whileTap={{ scale: 0.9 }}
-                    className="flex flex-col items-center gap-1 p-1.5 rounded-xl hover:bg-white/10 transition-all min-h-[50px]"
+                    className="flex flex-col items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all min-h-[60px] w-[60px]"
                   >
-                    <div className={`w-6 h-6 rounded-xl flex items-center justify-center ${item.color}`}>
-                      <Icon className="text-white text-xs" />
+                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${item.color}`}>
+                      <Icon className="text-white text-sm" />
                     </div>
-                    <span className="text-[10px] text-gray-700 dark:text-white/90 text-center leading-tight">
+                    <span className="text-xs text-gray-700 dark:text-white/90 text-center leading-tight">
                       {item.name}
                     </span>
                   </motion.button>

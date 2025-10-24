@@ -29,6 +29,24 @@
     -webkit-tap-highlight-color: transparent;
   }
   
+  /* macOS-style dock - no scrolling */
+  .dock-container {
+    overflow: visible !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  
+  .dock-container::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  /* Ensure dock items don't cause overflow */
+  .dock-item {
+    flex-shrink: 0;
+    min-width: 52px;
+    max-width: 64px;
+  }
+  
   /* Mobile-first approach */
   @media (max-width: 639px) {
     /* Mobile touch targets */
