@@ -79,6 +79,7 @@ export default function About({ handleOpenExperience }: AboutProps) {
               src="/images/profile.jpg"
               alt="Vasav Patel"
               className="w-full h-full object-cover"
+              loading="eager"
             />
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 via-transparent to-transparent" />
             

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Space_Mono, Kaushan_Script } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
+import { ResponsiveProvider } from '@/components/ResponsiveProvider'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const spaceMono = Space_Mono({ 
@@ -45,13 +46,19 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
-      <body className={`${inter.variable} ${spaceMono.variable} ${kaushanScript.variable} antialiased bg-black`}>
-        <Navigation />
-        <main className="relative z-10">
-          {children}
-        </main>
+      <body className={`${inter.variable} ${spaceMono.variable} ${kaushanScript.variable} antialiased bg-black w-full min-h-screen`}>
+        <ResponsiveProvider>
+          <Navigation />
+          <main className="relative z-10 w-full min-h-screen">
+            {children}
+          </main>
+        </ResponsiveProvider>
       </body>
     </html>
   )
