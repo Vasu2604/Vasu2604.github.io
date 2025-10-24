@@ -31,6 +31,63 @@
       min-height: 44px;
       min-width: 44px;
     }
+    
+    /* Prevent horizontal scroll on mobile */
+    body {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    
+    /* Better text sizing for mobile */
+    h1 { font-size: 1.875rem; line-height: 2.25rem; }
+    h2 { font-size: 1.5rem; line-height: 2rem; }
+    h3 { font-size: 1.25rem; line-height: 1.75rem; }
+    
+    /* Improve touch interactions */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Better spacing for mobile */
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
+  /* Tablet styles */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+  
+  /* Small mobile devices */
+  @media (max-width: 480px) {
+    h1 { font-size: 1.5rem; line-height: 2rem; }
+    h2 { font-size: 1.25rem; line-height: 1.75rem; }
+    h3 { font-size: 1.125rem; line-height: 1.5rem; }
+    
+    /* Ensure proper spacing on very small screens */
+    .container {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+    
+    /* Better touch targets for very small screens */
+    button, a {
+      min-height: 48px;
+      min-width: 48px;
+    }
+  }
+  
+  /* iPhone specific adjustments */
+  @media (max-width: 414px) {
+    .container {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
   }
 }
 

@@ -28,8 +28,8 @@ export default function Window({ title, onClose, children, initialPosition = { x
       style={{ 
         top: '5%',
         left: '50%',
-        marginLeft: isMaximized ? '-45vw' : '-425px',
-        width: isMaximized ? '90vw' : '850px',
+        marginLeft: isMaximized ? '-45vw' : window.innerWidth < 768 ? '-90vw' : '-425px',
+        width: isMaximized ? '90vw' : window.innerWidth < 768 ? '90vw' : '850px',
         maxWidth: '90vw',
         maxHeight: 'calc(100vh - 200px)'
       }}
@@ -37,7 +37,7 @@ export default function Window({ title, onClose, children, initialPosition = { x
       {/* Window */}
       <div className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-300 dark:border-white/10 rounded-2xl overflow-hidden flex flex-col" style={{ maxHeight: 'calc(100vh - 200px)' }}>
         {/* Title Bar */}
-        <div className="bg-gray-100/90 dark:bg-gray-800/90 px-4 py-3 flex items-center justify-between border-b border-gray-300 dark:border-white/10 cursor-move">
+        <div className="bg-gray-100/90 dark:bg-gray-800/90 px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between border-b border-gray-300 dark:border-white/10 cursor-move">
           <div className="flex items-center gap-2">
             {/* Traffic Lights */}
             <button
@@ -56,13 +56,13 @@ export default function Window({ title, onClose, children, initialPosition = { x
               aria-label="Maximize"
             />
           </div>
-          <div className="text-gray-800 dark:text-white text-sm font-medium absolute left-1/2 transform -translate-x-1/2">
+          <div className="text-gray-800 dark:text-white text-xs sm:text-sm font-medium absolute left-1/2 transform -translate-x-1/2">
             {title}
           </div>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden p-6 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-6 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
           {children}
         </div>
       </div>

@@ -32,21 +32,21 @@ const socialLinks = [
 
 export default function Contact() {
   return (
-    <div className="max-w-3xl mx-auto text-center">
-      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+    <div className="max-w-3xl mx-auto text-center px-4 sm:px-6 lg:px-0">
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6">
         Let&apos;s <span className="gradient-text">Connect!</span>
       </h2>
 
-      <div className="glass p-8 rounded-3xl mb-8">
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+      <div className="glass p-4 sm:p-6 lg:p-8 rounded-3xl mb-8">
+        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Ready to collaborate? 🚀
         </h3>
-        <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
           I&apos;m always eager to explore new opportunities and collaborations. 
           With a passion for solving complex problems through data science, AI, 
           and full-stack development, I&apos;m on a mission to make an impact.
         </p>
-        <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
           If you&apos;re looking for someone who brings both technical expertise 
           and a creative approach to projects, I&apos;d love to hear from you!
         </p>
@@ -55,13 +55,13 @@ export default function Contact() {
           href="mailto:patelvasav2604@gmail.com"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-block px-8 py-3 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+          className="inline-block px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full text-white font-semibold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
         >
           Get In Touch
         </motion.a>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         {socialLinks.map((link, index) => {
           const Icon = link.icon
           return (
@@ -75,13 +75,13 @@ export default function Contact() {
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
-              className="glass p-6 rounded-2xl flex flex-col items-center gap-3 hover:bg-black/5 dark:hover:bg-white/10 transition-all group"
+              className="glass p-4 sm:p-6 rounded-2xl flex flex-col items-center gap-2 sm:gap-3 hover:bg-black/5 dark:hover:bg-white/10 transition-all group"
               >
               <Icon 
-                className={link.name === 'GitHub' ? "text-4xl transition-all text-black dark:text-white" : "text-4xl transition-all"}
+                className={link.name === 'GitHub' ? "text-3xl sm:text-4xl transition-all text-black dark:text-white" : "text-3xl sm:text-4xl transition-all"}
                 style={link.name === 'GitHub' ? undefined : { color: link.color }}
               />
-              <span className="text-gray-900 dark:text-white font-semibold text-sm">{link.name}</span>
+              <span className="text-gray-900 dark:text-white font-semibold text-xs sm:text-sm">{link.name}</span>
             </motion.a>
           )
         })}

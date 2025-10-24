@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   description: 'Portfolio of Vasav Patel - Master\'s student in AI at San Jose State University. Specializing in Machine Learning, Data Science, and Full Stack Development.',
   keywords: ['Vasav Patel', 'AI Engineer', 'ML Engineer', 'Data Scientist', 'Full Stack Developer', 'San Jose State University'],
   authors: [{ name: 'Vasav Patel' }],
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -43,6 +44,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+      </head>
       <body className={`${inter.variable} ${spaceMono.variable} ${kaushanScript.variable} antialiased bg-black`}>
         <Navigation />
         <main className="relative z-10">

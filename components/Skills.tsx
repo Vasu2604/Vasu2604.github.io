@@ -36,15 +36,15 @@ const softSkills = [
 
 export default function Skills() {
   return (
-    <div className="max-w-5xl mx-auto">
-      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-0">
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
         Skills & <span className="gradient-text">Expertise</span>
       </h2>
 
       {/* Core Competencies (horizontal bars like screenshot) */}
       <div className="mb-10">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Core Competencies</h3>
-        <div className="grid md:grid-cols-2 gap-x-10 gap-y-5">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-6">Core Competencies</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 sm:gap-x-10 gap-y-5">
           {[
             { name: 'Machine Learning', level: 95, colors: ['#4f7cac','#357abd'] },
             { name: 'SQL/Postgres', level: 80, colors: ['#2e7d32','#43a047'] },
@@ -55,8 +55,8 @@ export default function Skills() {
           ].map((s, i) => (
             <div key={s.name} className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-gray-900 dark:text-white font-mono text-lg">{s.name}</span>
-                <span className="text-gray-900 dark:text-white font-mono text-lg">{s.level}%</span>
+                <span className="text-gray-900 dark:text-white font-mono text-sm sm:text-lg">{s.name}</span>
+                <span className="text-gray-900 dark:text-white font-mono text-sm sm:text-lg">{s.level}%</span>
               </div>
               <div className="w-full h-2.5 bg-gray-200 dark:bg-white/20 rounded-full overflow-hidden">
                 <motion.div
@@ -77,8 +77,8 @@ export default function Skills() {
 
       {/* Technical Skills */}
       <div className="mb-10">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Technical Skills</h3>
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-6">Technical Skills</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
           {technicalSkills.map((skill, index) => {
             const Icon = skill.icon
             return (
@@ -88,13 +88,13 @@ export default function Skills() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.05 }}
                 whileHover={{ scale: 1.08, y: -4 }}
-                className="glass p-3 rounded-2xl flex flex-col items-center gap-2 hover:bg-black/5 dark:hover:bg-white/10 transition-all group"
+                className="glass p-2 sm:p-3 rounded-2xl flex flex-col items-center gap-1 sm:gap-2 hover:bg-black/5 dark:hover:bg-white/10 transition-all group"
               >
                 <Icon 
-                  className="text-3xl transition-all" 
+                  className="text-2xl sm:text-3xl transition-all" 
                   style={{ color: skill.color }}
                 />
-                <p className="text-gray-900 dark:text-white text-[10px] font-medium text-center">{skill.name}</p>
+                <p className="text-gray-900 dark:text-white text-[9px] sm:text-[10px] font-medium text-center">{skill.name}</p>
                 <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
                   <motion.div
                     className="h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full"
@@ -111,16 +111,16 @@ export default function Skills() {
 
       {/* Soft Skills replaced per request (use circular UI like screenshot) */}
       <div>
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Professional Skills</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-6">Professional Skills</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {[
             { name: 'Communication', level: 95 },
             { name: 'Team Work', level: 93 },
             { name: 'Project Management', level: 90 },
             { name: 'Creativity', level: 89 },
           ].map((s, i) => (
-            <motion.div key={s.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.1 }} className="relative flex flex-col items-center justify-center h-40">
-              <svg className="w-32 h-32 rotate-[-90deg]" viewBox="0 0 100 100">
+            <motion.div key={s.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.1 }} className="relative flex flex-col items-center justify-center h-32 sm:h-40">
+              <svg className="w-24 h-24 sm:w-32 sm:h-32 rotate-[-90deg]" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="45" stroke="#2d2d2d" strokeWidth="6" fill="none" />
                 <motion.circle
                   cx="50" cy="50" r="45" fill="none"
@@ -131,8 +131,8 @@ export default function Skills() {
                 />
               </svg>
               <div className="absolute text-center">
-                <div className="text-gray-900 dark:text-white text-sm font-semibold">{s.name}</div>
-                <div className="text-gray-700 dark:text-white/70 text-xs mt-1">{s.level}%</div>
+                <div className="text-gray-900 dark:text-white text-xs sm:text-sm font-semibold">{s.name}</div>
+                <div className="text-gray-700 dark:text-white/70 text-[10px] sm:text-xs mt-1">{s.level}%</div>
               </div>
             </motion.div>
           ))}

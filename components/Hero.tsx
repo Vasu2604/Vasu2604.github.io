@@ -296,10 +296,10 @@ export default function Hero() {
         cursorY.set(e.clientY)
       }}
     >
-      {/* Top Navigation Bar */}
+      {/* Responsive Navigation Bar */}
       <div className="fixed top-0 left-0 right-0 z-50">
         <div className="backdrop-blur-xl bg-white/80 dark:bg-black/30 border-b border-gray-200 dark:border-white/10">
-          <div className="max-w-screen-2xl mx-auto px-3 py-1.5 flex items-center justify-between">
+          <div className="max-w-screen-2xl mx-auto px-3 sm:px-4 py-1.5 sm:py-2 flex items-center justify-between">
             {/* Left - Menu Button and Name */}
             <div ref={menuRef} className="flex items-center gap-2">
               <motion.button
@@ -313,8 +313,8 @@ export default function Hero() {
                 
                 {/* Button Container */}
                 <div className="relative backdrop-blur-xl bg-gray-100 dark:bg-white/10 px-2 py-1 rounded border border-gray-300 dark:border-white/20 shadow-md flex items-center gap-1.5">
-                  <FaBars className="text-gray-700 dark:text-white text-[10px]" />
-                  <span className="text-gray-700 dark:text-white font-medium text-[10px]">Menu</span>
+                  <FaBars className="text-gray-700 dark:text-white text-[10px] sm:text-xs" />
+                  <span className="text-gray-700 dark:text-white font-medium text-[10px] sm:text-xs hidden sm:inline">Menu</span>
                 </div>
               </motion.button>
 
@@ -325,7 +325,7 @@ export default function Hero() {
                 transition={{ delay: 0.3 }}
                 className="relative"
               >
-                <h1 className="text-sm font-semibold text-gray-800 dark:text-white/90 tracking-wide">
+                <h1 className="text-sm sm:text-base font-semibold text-gray-800 dark:text-white/90 tracking-wide">
                   Vasav Patel
                 </h1>
               </motion.div>
@@ -342,47 +342,14 @@ export default function Hero() {
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
               
               {/* Button Container */}
-              <div className="relative backdrop-blur-xl bg-gray-100 dark:bg-white/10 p-1.5 rounded-full border border-gray-300 dark:border-white/20 shadow-md">
+              <div className="relative backdrop-blur-xl bg-gray-100 dark:bg-white/10 p-1.5 sm:p-2 rounded-full border border-gray-300 dark:border-white/20 shadow-md">
                 {isDarkMode ? (
-                  <FaSun className="text-yellow-300 text-xs" />
+                  <FaSun className="text-yellow-300 text-xs sm:text-sm" />
                 ) : (
-                  <FaMoon className="text-indigo-600 text-xs" />
+                  <FaMoon className="text-indigo-600 text-xs sm:text-sm" />
                 )}
               </div>
             </motion.button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation - Hidden on Desktop */}
-      <div className="fixed top-0 left-0 right-0 z-50 md:hidden hidden">
-        <div className="backdrop-blur-xl bg-white/80 dark:bg-black/30 border-b border-gray-200 dark:border-white/10">
-          <div className="px-4 py-3 flex items-center justify-between">
-            <h1 className="text-lg font-semibold text-gray-800 dark:text-white">
-              Vasav Patel
-            </h1>
-            <div className="flex items-center gap-3">
-              <motion.button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-2 rounded-lg bg-gray-100 dark:bg-white/10"
-              >
-                <FaBars className="text-gray-700 dark:text-white text-sm" />
-              </motion.button>
-              <motion.button
-                onClick={() => setIsDarkMode(!isDarkMode)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="p-2 rounded-lg bg-gray-100 dark:bg-white/10"
-              >
-                {isDarkMode ? (
-                  <FaSun className="text-yellow-300 text-sm" />
-                ) : (
-                  <FaMoon className="text-indigo-600 text-sm" />
-                )}
-              </motion.button>
-            </div>
           </div>
         </div>
       </div>
@@ -597,8 +564,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Menu Dropdown */}
-      <div className="fixed top-10 left-3 z-[60]">
+      {/* Responsive Menu Dropdown */}
+      <div className="fixed top-12 sm:top-14 left-3 sm:left-4 z-[60]">
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
@@ -606,7 +573,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="w-56"
+              className="w-56 sm:w-64"
             >
               {/* Glow Background */}
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-2xl" />
@@ -628,12 +595,12 @@ export default function Hero() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.05 }}
                         whileHover={{ x: 3, backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)' }}
-                        className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-gray-700 dark:text-white/90 hover:text-gray-900 dark:hover:text-white transition-all duration-200 group"
+                        className="w-full flex items-center gap-2 px-2 py-2 sm:py-1.5 rounded-md text-gray-700 dark:text-white/90 hover:text-gray-900 dark:hover:text-white transition-all duration-200 group min-h-[44px]"
                       >
                         <div className="w-5 h-5 rounded bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform">
-                          <Icon className="text-[8px] text-white" />
+                          <Icon className="text-[8px] sm:text-[10px] text-white" />
                         </div>
-                        <span className="text-xs font-medium">{item.name}</span>
+                        <span className="text-xs sm:text-sm font-medium">{item.name}</span>
                       </motion.button>
                     )
                   })}
@@ -700,9 +667,9 @@ export default function Hero() {
                )}
       </AnimatePresence>
 
-             {/* Ultra Creative Dock */}
-             <div className="fixed bottom-6 z-40 left-1/2 transform -translate-x-1/2">
-        {/* Dock Container with Amazing Effects */}
+             {/* Responsive Dock */}
+             <div className="fixed bottom-4 sm:bottom-6 z-40 left-1/2 transform -translate-x-1/2 w-full max-w-xs sm:max-w-none px-4 sm:px-0">
+        {/* Desktop Dock Container */}
         <motion.div
           ref={dockRef}
           onMouseMove={(e) => {
@@ -724,20 +691,19 @@ export default function Hero() {
             rotateY: isDockHover ? 2 : 0
           }}
           transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-          className="relative"
+          className="relative hidden md:block"
           style={{ transformStyle: 'preserve-3d' }}
         >
           {/* Glow Background */}
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-3xl" />
           
-                 {/* Glass Container */}
-                 <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl">
-                   {/* Top Border Shine */}
-                   <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
-                   {/* Removed moving rail/central label; each icon shows its own tooltip */}
-                   
-                   {/* Dock Items Container */}
-                   <div className="flex items-end gap-2 px-4 py-3">
+          {/* Glass Container */}
+          <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl">
+            {/* Top Border Shine */}
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+            
+            {/* Dock Items Container */}
+            <div className="flex items-end gap-2 px-4 py-3">
               {dockItems.map((item, index) => (
                 <DockIcon
                   key={item.name}
@@ -766,8 +732,33 @@ export default function Hero() {
 
           {/* Bottom Reflection */}
           <div className="absolute inset-x-0 -bottom-8 h-8 bg-gradient-to-b from-white/5 to-transparent blur-md rounded-3xl" />
-          {/* Removed DSA visualizer per request */}
         </motion.div>
+
+        {/* Mobile Dock - Grid Layout */}
+        <div className="block md:hidden">
+          <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-2xl border border-gray-300 dark:border-white/20 shadow-2xl p-3">
+            <div className="grid grid-cols-4 gap-2">
+              {dockItems.slice(0, 8).map((item, index) => {
+                const Icon = item.icon
+                return (
+                  <motion.button
+                    key={item.name}
+                    onClick={() => handleDockItemClick(item)}
+                    whileTap={{ scale: 0.9 }}
+                    className="flex flex-col items-center gap-1 p-2 rounded-xl hover:bg-white/10 transition-all min-h-[60px]"
+                  >
+                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${item.color}`}>
+                      <Icon className="text-white text-sm" />
+                    </div>
+                    <span className="text-xs text-gray-700 dark:text-white/90 text-center leading-tight">
+                      {item.name}
+                    </span>
+                  </motion.button>
+                )
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )

@@ -98,7 +98,7 @@ export default function Experience() {
   })
 
   return (
-    <section id="experience" className="py-20 relative">
+    <section id="experience" className="py-12 sm:py-16 lg:py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -107,39 +107,39 @@ export default function Experience() {
           animate={inView ? 'visible' : 'hidden'}
         >
           {/* Section Title */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold gradient-text mb-4">
+          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-4">
               My Journey
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto rounded-full"></div>
           </motion.div>
 
           {/* Work Experience */}
-          <motion.div variants={itemVariants} className="mb-16">
-            <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
+          <motion.div variants={itemVariants} className="mb-12 sm:mb-16">
+            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 flex items-center gap-3">
               <Briefcase className="text-primary-400" />
               Work Experience
             </h3>
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               {experiences.map((exp, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
                   whileHover={{ scale: 1.02 }}
-                  className="glass p-6 rounded-2xl hover:shadow-neon transition-all"
+                  className="glass p-4 sm:p-6 rounded-2xl hover:shadow-neon transition-all"
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                     <div>
-                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{exp.title}</h4>
-                      <p className="text-primary-600 dark:text-primary-400 font-semibold">{exp.company}</p>
+                      <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">{exp.title}</h4>
+                      <p className="text-primary-600 dark:text-primary-400 font-semibold text-sm sm:text-base">{exp.company}</p>
                     </div>
-                    <span className="text-gray-600 dark:text-gray-400 text-sm md:text-base mt-2 md:mt-0">{exp.period}</span>
+                    <span className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm md:text-base mt-2 md:mt-0">{exp.period}</span>
                   </div>
-                  <ul className="space-y-2">
+                  <ul className="space-y-1.5 sm:space-y-2">
                     {exp.description.map((item, i) => (
-                      <li key={i} className="text-gray-700 dark:text-gray-300 flex items-start">
-                        <span className="text-accent-600 dark:text-accent-400 mr-2">▹</span>
-                        {item}
+                      <li key={i} className="text-sm sm:text-base text-gray-700 dark:text-gray-300 flex items-start">
+                        <span className="text-accent-600 dark:text-accent-400 mr-2 mt-1">▹</span>
+                        <span className="text-xs sm:text-sm">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -150,26 +150,26 @@ export default function Experience() {
 
           {/* Education */}
           <motion.div variants={itemVariants}>
-            <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
+            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 flex items-center gap-3">
               <GraduationCap className="text-accent-400" />
               Education
             </h3>
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               {education.map((edu, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
                   whileHover={{ scale: 1.02 }}
-                  className="glass p-6 rounded-2xl hover:shadow-neon-accent transition-all"
+                  className="glass p-4 sm:p-6 rounded-2xl hover:shadow-neon-accent transition-all"
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                     <div>
-                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{edu.degree}</h4>
-                      <p className="text-accent-600 dark:text-accent-400 font-semibold">{edu.school}</p>
+                      <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">{edu.degree}</h4>
+                      <p className="text-accent-600 dark:text-accent-400 font-semibold text-sm sm:text-base">{edu.school}</p>
                     </div>
-                    <span className="text-gray-600 dark:text-gray-400 text-sm md:text-base mt-2 md:mt-0">{edu.period}</span>
+                    <span className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm md:text-base mt-2 md:mt-0">{edu.period}</span>
                   </div>
-                  <p className="text-gray-700 dark:text-gray-300">{edu.description}</p>
+                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">{edu.description}</p>
                 </motion.div>
               ))}
             </div>

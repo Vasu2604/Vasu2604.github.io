@@ -91,7 +91,7 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/40 via-blue-500/40 to-pink-500/40 blur-xl" />
       </div>
 
-      <div className="relative h-56 overflow-hidden">
+      <div className="relative h-48 sm:h-56 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
           style={{ backgroundImage: `url(${project.image})` }}
@@ -114,18 +114,18 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
         </a>
       </div>
 
-      <div className="p-5">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-400 transition-colors">
+      <div className="p-4 sm:p-5">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-400 transition-colors">
           {project.title}
         </h3>
-        <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed">
+        <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mb-4 leading-relaxed">
           {project.description}
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
           {project.tech.map((tech) => (
             <span
               key={tech}
-              className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-gray-300"
+              className="px-2 sm:px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[9px] sm:text-[10px] text-gray-300"
             >
               {tech}
             </span>
@@ -144,7 +144,7 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
 
 export default function Projects() {
   return (
-    <div className="max-w-5xl mx-auto px-4 md:px-0">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-0">
       {/* Animated title with floating elements */}
       <motion.div 
         className="relative mb-12 text-center"
@@ -152,7 +152,7 @@ export default function Projects() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
           Featured <span className="gradient-text">Projects</span>
         </h2>
         
@@ -172,7 +172,7 @@ export default function Projects() {
 
              {/* Enhanced grid with stagger animation */}
              <motion.div 
-               className="grid md:grid-cols-2 gap-6"
+               className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
                transition={{ duration: 0.6, delay: 0.3 }}

@@ -17,7 +17,7 @@ const contactInfo = [
 
 export default function About({ handleOpenExperience }: AboutProps) {
   return (
-    <div className="max-w-4xl mx-auto relative px-4 md:px-0">
+    <div className="max-w-4xl mx-auto relative px-4 sm:px-6 lg:px-0">
       {/* Background floating elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[...Array(8)].map((_, i) => (
@@ -73,7 +73,7 @@ export default function About({ handleOpenExperience }: AboutProps) {
           />
           
                  <div 
-                   className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary-500 shadow-[0_0_30px_rgba(59,130,246,0.35)]"
+                   className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-primary-500 shadow-[0_0_30px_rgba(59,130,246,0.35)]"
                  >
             <img
               src="/images/profile.jpg"
@@ -107,10 +107,10 @@ export default function About({ handleOpenExperience }: AboutProps) {
           </div>
         </motion.div>
         
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 text-center">
           Hi, I&apos;m <span className="gradient-text">Vasu</span>
         </h1>
-        <div className="text-xl text-blue-700 dark:text-blue-300 mb-6 text-center">
+        <div className="text-lg sm:text-xl text-blue-700 dark:text-blue-300 mb-6 text-center">
           <TypeAnimation
             sequence={[
               'SOFTWARE ENGINEER', 1500,
@@ -127,7 +127,7 @@ export default function About({ handleOpenExperience }: AboutProps) {
           />
         </div>
         
-        <p className="text-gray-700 dark:text-gray-300 text-center max-w-3xl leading-relaxed mb-4">
+        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 text-center max-w-3xl leading-relaxed mb-4">
           I&apos;m Vasav Patel, a Master&apos;s student in Artificial Intelligence at San Jose State University, 
           with a Bachelor&apos;s in Computer Science and Business Systems from NMIMS Deemed-to-be-University, 
           Mumbai. Across academia and industry, I&apos;ve built a strong foundation in AI, machine learning, and 
@@ -136,7 +136,7 @@ export default function About({ handleOpenExperience }: AboutProps) {
           data-driven applications with integrity.
         </p>
 
-        <p className="text-gray-600 dark:text-gray-400 text-center max-w-3xl leading-relaxed mb-6">
+        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 text-center max-w-3xl leading-relaxed mb-6">
           I&apos;m on a quest to use AI to solve real-world puzzles and spark innovation. Always chasing the next 
           tech upgrade, I enjoy tackling new challenges and bringing a bit of geeky magic to every project—one 
           algorithm at a time. When I&apos;m not coding, I&apos;m hiking with my squad, caring for my plants, or reading 
@@ -159,7 +159,7 @@ export default function About({ handleOpenExperience }: AboutProps) {
       </motion.div>
 
       {/* Contact Info Cards */}
-      <div className="grid grid-cols-2 gap-4 mt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
         {contactInfo.map((item, index) => {
           const Icon = item.icon
           return (
@@ -185,11 +185,11 @@ export default function About({ handleOpenExperience }: AboutProps) {
       </div>
 
       {/* Interest Tags */}
-      <div className="mt-8 flex flex-wrap gap-3 justify-center">
+      <div className="mt-8 flex flex-wrap gap-2 sm:gap-3 justify-center">
         {['Distributed Systems', 'Enterprise Software', 'Parallel Computing', 'Cloud Computing', 'Machine Learning', 'AI'].map((interest) => (
           <span
             key={interest}
-            className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-full text-sm text-blue-300 hover:bg-blue-500/30 transition-colors"
+            className="px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-500/20 border border-blue-500/30 rounded-full text-xs sm:text-sm text-blue-300 hover:bg-blue-500/30 transition-colors"
           >
             {interest}
           </span>
