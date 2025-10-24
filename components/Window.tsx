@@ -28,13 +28,16 @@ export default function Window({ title, onClose, children, initialPosition = { x
     }
     
     if (device.isMobile) {
+      // Mobile: Perfect center positioning
       return {
-        top: '5%',
+        top: '50%',
         left: '50%',
-        marginLeft: '-90vw',
+        transform: 'translate(-50%, -50%)',
         width: '90vw',
         maxWidth: '90vw',
-        maxHeight: 'calc(100vh - 200px)'
+        maxHeight: '80vh',
+        marginLeft: '0',
+        marginTop: '0'
       }
     }
     
@@ -49,7 +52,7 @@ export default function Window({ title, onClose, children, initialPosition = { x
       }
     }
     
-    // Desktop
+    // Desktop - Keep unchanged
     return {
       top: '5%',
       left: '50%',
@@ -61,19 +64,45 @@ export default function Window({ title, onClose, children, initialPosition = { x
   }
 
   return (
-    <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ 
-        scale: 1, 
-        opacity: 1,
-        ...getWindowStyle()
-      }}
-      exit={{ scale: 0.8, opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      drag={!isMaximized && !device.isMobile}
-      dragMomentum={false}
-      className="fixed z-50 rounded-2xl overflow-hidden shadow-2xl"
-    >
+    <>
+      {/* Mobile backdrop for better centering visibility */}
+      {device.isMobile && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+          onClick={onClose}
+        />
+      )}
+      
+      <motion.div
+        initial={{ 
+          scale: 0.8, 
+          opacity: 0,
+          ...(device.isMobile ? { y: -50 } : {})
+        }}
+        animate={{ 
+          scale: 1, 
+          opacity: 1,
+          ...(device.isMobile ? { y: 0 } : {}),
+          ...getWindowStyle()
+        }}
+        exit={{ 
+          scale: 0.8, 
+          opacity: 0,
+          ...(device.isMobile ? { y: -50 } : {})
+        }}
+        transition={{ 
+          duration: 0.3,
+          type: device.isMobile ? "spring" : "tween",
+          stiffness: device.isMobile ? 300 : undefined,
+          damping: device.isMobile ? 30 : undefined
+        }}
+        drag={!isMaximized && !device.isMobile}
+        dragMomentum={false}
+        className="fixed z-50 rounded-2xl overflow-hidden shadow-2xl"
+      >
       {/* Window */}
       <div className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-300 dark:border-white/10 rounded-2xl overflow-hidden flex flex-col" style={{ maxHeight: 'calc(100vh - 200px)' }}>
         {/* Title Bar */}
@@ -107,6 +136,7 @@ export default function Window({ title, onClose, children, initialPosition = { x
         </div>
       </div>
     </motion.div>
+    </>
   )
 }
 
