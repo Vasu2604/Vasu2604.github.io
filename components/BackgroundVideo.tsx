@@ -12,17 +12,46 @@ interface BackgroundVideoProps {
 export default function BackgroundVideo({ cursorX, cursorY, isMobile }: BackgroundVideoProps) {
   const [videoError, setVideoError] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
+  const [useFallback, setUseFallback] = useState(false)
 
   useEffect(() => {
-    // Check if video file exists
-    const video = document.createElement('video')
-    video.src = '/background-video.mp4'
-    video.onerror = () => setVideoError(true)
-    video.onloadeddata = () => setVideoLoaded(true)
-  }, [])
+    // For mobile, prefer the static background image for better performance
+    if (isMobile) {
+      setUseFallback(true)
+      return
+    }
+    
+    // Check if video file exists and can be loaded (desktop only)
+    const checkVideo = async () => {
+      try {
+        const video = document.createElement('video')
+        video.src = '/background-video.mp4'
+        video.muted = true
+        video.playsInline = true
+        
+        const canPlay = await new Promise((resolve) => {
+          video.oncanplay = () => resolve(true)
+          video.onerror = () => resolve(false)
+          video.load()
+        })
+        
+        if (canPlay) {
+          setVideoLoaded(true)
+        } else {
+          setVideoError(true)
+          setUseFallback(true)
+        }
+      } catch (error) {
+        setVideoError(true)
+        setUseFallback(true)
+      }
+    }
+    
+    checkVideo()
+  }, [isMobile])
 
-  if (videoError || !videoLoaded) {
-    // Fallback static background
+  if (videoError || !videoLoaded || useFallback) {
+    // Fallback static background - Use the same background image as desktop
     return (
       <motion.div
         className="fixed inset-0 z-0"
@@ -31,37 +60,16 @@ export default function BackgroundVideo({ cursorX, cursorY, isMobile }: Backgrou
           y: !isMobile ? cursorY : 0,
         }}
       >
-        {/* Gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-          {/* Animated background pattern */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-[url('/images/back.jpg')] bg-cover bg-center"></div>
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/30 to-pink-900/30"></div>
-          </div>
-          
-          {/* Floating particles */}
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-white/20 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -30, 0],
-                opacity: [0.2, 0.8, 0.2],
-                scale: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
+        {/* Use the same background image as desktop */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('/images/back.jpg')"
+          }}
+        >
+          {/* Overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/20 dark:bg-black/40"></div>
         </div>
-        <div className="absolute inset-0 bg-transparent dark:bg-black/40"></div>
       </motion.div>
     )
   }
@@ -81,11 +89,30 @@ export default function BackgroundVideo({ cursorX, cursorY, isMobile }: Backgrou
         playsInline
         preload="auto"
         className="absolute w-full h-full object-cover"
-        onError={() => setVideoError(true)}
+        onError={() => {
+          setVideoError(true)
+          setUseFallback(true)
+        }}
         onLoadedData={() => setVideoLoaded(true)}
+        onCanPlay={() => setVideoLoaded(true)}
+        style={{
+          // Ensure video plays on mobile
+          objectFit: 'cover'
+        }}
       >
         <source src="/background-video.mp4" type="video/mp4" />
+        <source src="/public/background-video.mp4" type="video/mp4" />
       </video>
+      {/* Fallback background image in case video doesn't load */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/images/back.jpg')",
+          display: videoLoaded && !videoError ? 'none' : 'block'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/20 dark:bg-black/40"></div>
+      </div>
       <div className="absolute inset-0 bg-transparent dark:bg-black/40"></div>
     </motion.div>
   )
