@@ -363,12 +363,12 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      {/* Video Background */}
+      {/* Video Background - Always visible on mobile */}
       <motion.div
         className="fixed inset-0 z-0"
         style={{
-          x: useSpring(useTransform(cursorX, [0, typeof window !== 'undefined' ? window.innerWidth : 1], [-8, 8]), { stiffness: 80, damping: 20 }),
-          y: useSpring(useTransform(cursorY, [0, typeof window !== 'undefined' ? window.innerHeight : 1], [-6, 6]), { stiffness: 80, damping: 20 }),
+          x: device.isMobile ? 0 : useSpring(useTransform(cursorX, [0, typeof window !== 'undefined' ? window.innerWidth : 1], [-8, 8]), { stiffness: 80, damping: 20 }),
+          y: device.isMobile ? 0 : useSpring(useTransform(cursorY, [0, typeof window !== 'undefined' ? window.innerHeight : 1], [-6, 6]), { stiffness: 80, damping: 20 }),
         }}
       >
         <video
@@ -376,7 +376,8 @@ export default function Hero() {
           loop
           muted
           playsInline
-          className="absolute w-full h-full object-cover"
+          preload="auto"
+          className="absolute w-full h-full object-cover opacity-100"
         >
           <source src="/background-video.mp4" type="video/mp4" />
         </video>
@@ -748,82 +749,84 @@ export default function Hero() {
 
         {/* Mobile Dock - Enhanced Grid Layout */}
         {device.isMobile && (
-          <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-            className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl p-4 w-fit mx-auto"
-          >
-            {/* Animated glow */}
+          <div className="flex justify-center items-center w-full px-4">
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-pink-500/10 blur-xl rounded-3xl"
-              animate={{
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-            />
-            
-            <div className="relative grid grid-cols-4 gap-3">
-              {dockItems.slice(0, 8).map((item, index) => {
-                const Icon = item.icon
-                return (
-                  <motion.button
-                    key={item.name}
-                    onClick={() => handleDockItemClick(item)}
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{
-                      delay: index * 0.05,
-                      type: 'spring',
-                      stiffness: 300,
-                      damping: 20,
-                    }}
-                    whileTap={{ scale: 0.85 }}
-                    className="relative flex flex-col items-center gap-2 p-2 rounded-xl active:bg-white/20 transition-all min-h-[68px] w-[68px] group"
-                  >
-                    {/* Icon with gradient background */}
-                    <motion.div
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${item.color} shadow-lg relative overflow-hidden`}
-                      whileTap={{ rotate: [0, -5, 5, 0] }}
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+              className="relative backdrop-blur-2xl bg-white/90 dark:bg-white/10 rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl p-4"
+            >
+              {/* Animated glow */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-pink-500/10 blur-xl rounded-3xl"
+                animate={{
+                  opacity: [0.3, 0.5, 0.3],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
+              
+              <div className="relative grid grid-cols-4 gap-3">
+                {dockItems.slice(0, 8).map((item, index) => {
+                  const Icon = item.icon
+                  return (
+                    <motion.button
+                      key={item.name}
+                      onClick={() => handleDockItemClick(item)}
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{
+                        delay: index * 0.05,
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 20,
+                      }}
+                      whileTap={{ scale: 0.85 }}
+                      className="relative flex flex-col items-center justify-center gap-1.5 p-2 rounded-xl active:bg-white/20 transition-all h-[72px] w-[72px] group"
                     >
-                      {/* Shine effect */}
+                      {/* Icon with gradient background */}
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/30 to-white/0"
-                        animate={{
-                          x: ['-100%', '100%'],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          repeatDelay: 1,
-                        }}
-                      />
-                      <Icon className="relative z-10 text-white text-base" />
-                    </motion.div>
-                    
-                    {/* Label */}
-                    <span className="text-[10px] text-gray-700 dark:text-white/90 text-center leading-tight font-medium">
-                      {item.name}
-                    </span>
-                    
-                    {/* Active indicator */}
-                    {openWindow === item.window && (
-                      <motion.div
-                        layoutId="mobile-active"
-                        className="absolute -bottom-1 w-2 h-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                      />
-                    )}
-                  </motion.button>
-                )
-              })}
-            </div>
-          </motion.div>
+                        className={`w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br ${item.color} shadow-lg relative overflow-hidden`}
+                        whileTap={{ rotate: [0, -5, 5, 0] }}
+                      >
+                        {/* Shine effect */}
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/30 to-white/0"
+                          animate={{
+                            x: ['-100%', '100%'],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            repeatDelay: 1,
+                          }}
+                        />
+                        <Icon className="relative z-10 text-white text-lg" />
+                      </motion.div>
+                      
+                      {/* Label */}
+                      <span className="text-[9px] text-gray-700 dark:text-white/90 text-center leading-tight font-medium max-w-[60px] truncate">
+                        {item.name}
+                      </span>
+                      
+                      {/* Active indicator */}
+                      {openWindow === item.window && (
+                        <motion.div
+                          layoutId="mobile-active"
+                          className="absolute -bottom-0.5 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                        />
+                      )}
+                    </motion.button>
+                  )
+                })}
+              </div>
+            </motion.div>
+          </div>
         )}
       </div>
     </section>
