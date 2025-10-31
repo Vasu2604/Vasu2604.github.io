@@ -212,6 +212,16 @@ export default function Hero() {
   // Device detection
   const device = useDevice()
 
+  // Parallax effects for background (unconditional hooks)
+  const parallaxX = useSpring(
+    useTransform(cursorX, [0, typeof window !== 'undefined' ? window.innerWidth : 1], [-8, 8]),
+    { stiffness: 80, damping: 20 }
+  )
+  const parallaxY = useSpring(
+    useTransform(cursorY, [0, typeof window !== 'undefined' ? window.innerHeight : 1], [-6, 6]),
+    { stiffness: 80, damping: 20 }
+  )
+
   // Load theme from localStorage
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme')
@@ -367,8 +377,8 @@ export default function Hero() {
       <motion.div
         className="fixed inset-0 z-0"
         style={{
-          x: device.isMobile ? 0 : useSpring(useTransform(cursorX, [0, typeof window !== 'undefined' ? window.innerWidth : 1], [-8, 8]), { stiffness: 80, damping: 20 }),
-          y: device.isMobile ? 0 : useSpring(useTransform(cursorY, [0, typeof window !== 'undefined' ? window.innerHeight : 1], [-6, 6]), { stiffness: 80, damping: 20 }),
+          x: device.isMobile ? 0 : parallaxX,
+          y: device.isMobile ? 0 : parallaxY,
         }}
       >
         <video
