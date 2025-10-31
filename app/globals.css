@@ -59,6 +59,8 @@
     body {
       overflow-x: hidden;
       width: 100%;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: none;
     }
     
     /* Mobile typography */
@@ -70,6 +72,17 @@
     .container {
       padding-left: 0.75rem;
       padding-right: 0.75rem;
+    }
+    
+    /* Better touch feedback */
+    * {
+      -webkit-tap-highlight-color: rgba(124, 58, 237, 0.15);
+      touch-action: manipulation;
+    }
+    
+    /* Smooth animations */
+    * {
+      will-change: auto;
     }
   }
   
@@ -254,5 +267,52 @@
 
 .pulse {
   animation: pulse 2s ease-in-out infinite;
+}
+
+/* Enhanced mobile animations */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Smooth touch ripple */
+@keyframes touchRipple {
+  0% {
+    transform: scale(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Performance optimizations */
+@media (max-width: 639px) {
+  .mobile-optimized {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000;
+    -webkit-perspective: 1000;
+  }
 }
 

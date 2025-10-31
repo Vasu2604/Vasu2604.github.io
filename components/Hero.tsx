@@ -10,6 +10,8 @@ import Skills from './Skills'
 import Contact from './Contact'
 import Experience from './Experience'
 import { useDevice } from '../hooks/useDevice'
+import TouchRipple from './TouchRipple'
+import SubtleParticles from './SubtleParticles'
 
 type WindowType = 'profile' | 'projects' | 'skills' | 'contact' | 'experience' | null
 
@@ -300,6 +302,10 @@ export default function Hero() {
         cursorY.set(e.clientY)
       }}
     >
+      {/* Subtle enhancements */}
+      <TouchRipple />
+      <SubtleParticles />
+      
       {/* Responsive Navigation Bar */}
       <div className="fixed top-0 left-0 right-0 z-50">
         <div className="backdrop-blur-xl bg-white/80 dark:bg-black/30 border-b border-gray-200 dark:border-white/10">
@@ -740,30 +746,84 @@ export default function Hero() {
           </motion.div>
         )}
 
-        {/* Mobile Dock - Clean Grid Layout */}
+        {/* Mobile Dock - Enhanced Grid Layout */}
         {device.isMobile && (
-          <div className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-2xl border border-gray-300 dark:border-white/20 shadow-2xl p-3 w-fit mx-auto">
-            <div className="grid grid-cols-4 gap-3">
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+            className="relative backdrop-blur-2xl bg-white/80 dark:bg-white/10 rounded-3xl border border-gray-300 dark:border-white/20 shadow-2xl p-4 w-fit mx-auto"
+          >
+            {/* Animated glow */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-pink-500/10 blur-xl rounded-3xl"
+              animate={{
+                opacity: [0.3, 0.5, 0.3],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+            
+            <div className="relative grid grid-cols-4 gap-3">
               {dockItems.slice(0, 8).map((item, index) => {
                 const Icon = item.icon
                 return (
                   <motion.button
                     key={item.name}
                     onClick={() => handleDockItemClick(item)}
-                    whileTap={{ scale: 0.9 }}
-                    className="flex flex-col items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all min-h-[60px] w-[60px]"
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{
+                      delay: index * 0.05,
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 20,
+                    }}
+                    whileTap={{ scale: 0.85 }}
+                    className="relative flex flex-col items-center gap-2 p-2 rounded-xl active:bg-white/20 transition-all min-h-[68px] w-[68px] group"
                   >
-                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${item.color}`}>
-                      <Icon className="text-white text-sm" />
-                    </div>
-                    <span className="text-xs text-gray-700 dark:text-white/90 text-center leading-tight">
+                    {/* Icon with gradient background */}
+                    <motion.div
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${item.color} shadow-lg relative overflow-hidden`}
+                      whileTap={{ rotate: [0, -5, 5, 0] }}
+                    >
+                      {/* Shine effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/30 to-white/0"
+                        animate={{
+                          x: ['-100%', '100%'],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatDelay: 1,
+                        }}
+                      />
+                      <Icon className="relative z-10 text-white text-base" />
+                    </motion.div>
+                    
+                    {/* Label */}
+                    <span className="text-[10px] text-gray-700 dark:text-white/90 text-center leading-tight font-medium">
                       {item.name}
                     </span>
+                    
+                    {/* Active indicator */}
+                    {openWindow === item.window && (
+                      <motion.div
+                        layoutId="mobile-active"
+                        className="absolute -bottom-1 w-2 h-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                      />
+                    )}
                   </motion.button>
                 )
               })}
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
     </section>
